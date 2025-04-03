@@ -1,0 +1,37 @@
+services:
+  php:
+    image: php:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/src
+    command: >
+      sh -c "cd /src &&
+      apt-get update -y &&
+      apt-get install -y libpq-dev &&
+      docker-php-ext-install pdo_pgsql pgsql &&
+      curl -sS https://get.symfony.com/cli/installer | bash &&
+      /root/.symfony5/bin/symfony server:start --allow-all-ip
+      "
+    networks:
+      - symfony_test
+
+  database:
+    image: bitnami/postgresql:latest
+    ports:
+      - "8432:5432"
+    environment:
+      POSTGRES_DB: app
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: test123
+      POSTGRES_USER: app
+    networks:
+      - symfony_test
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+
+volumes:
+  database_data:
+
+networks:
+  symfony_test:

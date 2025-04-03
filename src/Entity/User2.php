@@ -12,7 +12,8 @@ class User2
 {
     #[Id]
     #[ORM\Column(name: 'id', type: 'integer')]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'users2_id_seq', allocationSize: 1, initialValue: 1)]
     public int $id;
 
     #[ORM\Column(name: 'username', type: 'string')]

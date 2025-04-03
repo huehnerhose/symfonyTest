@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Messages2
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\SequenceGenerator(sequenceName: 'messages2_id_seq', allocationSize: 1, initialValue: 1)]
     #[ORM\Column]
     private ?int $id = null;
 
